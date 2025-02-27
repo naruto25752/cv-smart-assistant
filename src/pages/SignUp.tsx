@@ -20,7 +20,7 @@ const SignUp = () => {
             <span className="font-semibold">Resume</span>AI
           </h1>
           <p className={`text-lg text-muted-foreground ${loaded ? 'animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
-            Create an account to get started
+            Create an account with GitHub to get started
           </p>
         </div>
         
@@ -36,12 +36,18 @@ const SignUp = () => {
                   formButtonPrimary: "bg-primary hover:bg-primary/90 text-white",
                   formFieldInput: "rounded-md border border-input bg-background px-3 py-2",
                   footerAction: "text-primary hover:text-primary/90",
+                  socialButtonsBlockButton: "border border-input bg-background hover:bg-secondary",
+                  socialButtonsBlockButtonText: "text-foreground font-medium",
+                  socialButtonsBlockButtonArrow: "text-foreground",
                 }
               }}
               routing="path"
               path="/sign-up"
               signInUrl="/sign-in"
               redirectUrl="/"
+              // Prioritize GitHub as the auth provider
+              // Note: You need to configure GitHub OAuth in your Clerk dashboard
+              afterSignUpUrl="/"
             />
           </CardContent>
         </Card>
