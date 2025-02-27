@@ -1,12 +1,14 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Index = () => {
   const navigate = useNavigate();
   const [loaded, setLoaded] = useState(false);
+  const { isLoaded, isSignedIn } = useAuth();
 
   useEffect(() => {
     setLoaded(true);
@@ -15,14 +17,41 @@ const Index = () => {
   return (
     <div className={`min-h-screen bg-gradient-to-b from-background to-secondary p-6 ${loaded ? 'animate-fade-in' : 'opacity-0'}`}>
       <div className="max-w-6xl mx-auto">
-        <header className="text-center mb-16 pt-12">
+        <header className="flex justify-between items-center mb-8">
+          <div>
+            <h2 className="text-2xl font-semibold">
+              Resume<span className="font-light">AI</span>
+            </h2>
+          </div>
+          
+          <div>
+            <SignedIn>
+              <div className="flex items-center gap-4">
+                <UserButton afterSignOutUrl="/" />
+              </div>
+            </SignedIn>
+            
+            <SignedOut>
+              <div className="flex gap-4">
+                <Button variant="outline" onClick={() => navigate('/sign-in')}>
+                  Sign In
+                </Button>
+                <Button onClick={() => navigate('/sign-up')}>
+                  Sign Up
+                </Button>
+              </div>
+            </SignedOut>
+          </div>
+        </header>
+
+        <div className="text-center mb-16 pt-12">
           <h1 className={`text-5xl font-light tracking-tight mb-4 ${loaded ? 'animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
             <span className="font-semibold">Resume</span>AI
           </h1>
           <p className={`text-xl text-muted-foreground max-w-2xl mx-auto ${loaded ? 'animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
             Create, analyze and optimize your resume for ATS with the power of artificial intelligence
           </p>
-        </header>
+        </div>
 
         <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
           <Card className={`border overflow-hidden hover:shadow-md transition-all duration-300 ${loaded ? 'animate-fade-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
